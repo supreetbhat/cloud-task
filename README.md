@@ -50,7 +50,17 @@ Goal: Understand the differences in abstraction levels, operational responsibili
 Modern production architecture on a single EC2 instance:
 ```
 
-Internet ↓ AWS Security Group (80, 443 only) ↓ Nginx (port 80 / 443) – public-facing ↓ (proxy_pass) 127.0.0.1:8000 ↓ Gunicorn – manages 4× Uvicorn workers ↓ FastAPI application
+Internet
+ ↓
+AWS Security Group (80, 443 only)
+ ↓
+ Nginx (port 80 / 443) – public-facing
+ ↓
+(proxy_pass) 127.0.0.1:8000
+ ↓
+Gunicorn – manages 4× Uvicorn workers
+ ↓
+FastAPI application
 
 text
 
