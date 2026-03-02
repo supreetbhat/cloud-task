@@ -110,8 +110,6 @@ Open → [http://localhost:8000](http://localhost:8000/)
 |requirements.txt|Python dependencies|
 |Dockerfile|Container definition|
 |render.yaml|Render.com native configuration|
-|nginx.conf|Example Nginx reverse proxy config|
-|gunicorn.conf.py|Gunicorn settings (if used)|
 |service.service|systemd unit file example|
 
 ## 📌 Next Steps / Possible Improvements
