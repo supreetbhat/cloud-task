@@ -5,6 +5,11 @@ from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from sqlmodel import Field, Session, SQLModel, create_engine, select
 from passlib.context import CryptContext
 import jwt
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
 
 SECRET_KEY = "my-super-secret-key-do-not-share" 
 ALGORITHM = "HS256"
@@ -28,8 +33,9 @@ class DailyEntry(SQLModel, table=True):
 
 
 # --- 2. DATABASE SETUP ---
-sqlite_url = "sqlite:///database.db"
-engine = create_engine(sqlite_url, connect_args={"check_same_thread": False})
+database_url = os.getenv("DATABASE_URL")
+engine = create_engine(database_url)
+
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
