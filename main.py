@@ -11,7 +11,14 @@ from dotenv import load_dotenv
 load_dotenv()
 
 
-SECRET_KEY = "my-super-secret-key-do-not-share" 
+SECRET_KEY = os.getenv("SECRET_KEY")
+if not SECRET_KEY:
+    raise RuntimeError(
+        "SECRET_KEY is not set. Export it in the environment or put it in a local .env file; "
+        "see .env.example. The application refuses to start rather than fall back to a default, "
+        "because a predictable signing key means anyone can mint a valid token."
+    )
+
 ALGORITHM = "HS256"
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")

@@ -1,3 +1,13 @@
 venv/
 __pycache__/
 .DS_Store
+
+# Secrets: never commit real values, only .env.example
+.env
+.env.*
+!.env.example
+
+# Local database files
+database.db
+*.db
+*.sqlite3

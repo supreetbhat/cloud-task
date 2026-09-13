@@ -96,7 +96,11 @@ source venv/bin/activate    # Linux / macOS
 # 3. Install dependencies
 pip install -r requirements.txt
 
-# 4. Run development server
+# 4. Configure secrets (see .env.example)
+cp .env.example .env
+python3 -c "import secrets; print(secrets.token_urlsafe(32))"   # paste into SECRET_KEY
+
+# 5. Run development server
 uvicorn main:app --reload --port 8000
 ````
 
@@ -107,10 +111,22 @@ Open → [http://localhost:8000](http://localhost:8000/)
 |File|Purpose|
 |---|---|
 |main.py|FastAPI application|
+|.env.example|Template for local secrets; copy to `.env`, which is gitignored|
 |requirements.txt|Python dependencies|
 |Dockerfile|Container definition|
 |render.yaml|Render.com native configuration|
 |service.service|systemd unit file example|
+
+## 🔑 Secrets Handling
+
+`SECRET_KEY` signs the JWTs issued at `/login`, and `DATABASE_URL` points at the database. Both are
+read from the environment, and the application **refuses to start** if `SECRET_KEY` is missing rather
+than falling back to a default, because a predictable signing key lets anyone mint a valid token.
+
+An earlier version of this repository hardcoded the signing key in `main.py` and committed the local
+SQLite file. Both are fixed: the key now comes from the environment, `.env` and `*.db` are gitignored,
+and `database.db` is no longer tracked. The old key remains in the git history, so it is treated as
+burned and must never be reused.
 
 ## 📌 Next Steps / Possible Improvements
 
